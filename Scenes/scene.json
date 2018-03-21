@@ -1,0 +1,91 @@
+{
+    "Eye": [200, 300, 1000],
+    "EyePitch": -0.08,
+    "Shadows": true,
+    "MaxRecursionDepth": 3,
+    "SuperSamplingFactor": 4,
+    "AmbientLight": [0.5, 0.5, 0.5],
+    "Lights": [
+        {
+            "position": [200, 500, -1000],
+            "color": [0.90, 0.85, 0.8]
+        }
+    ],
+    "Objects": [
+        {
+            "type": "plane",
+            "comment": "Grass",
+            "position": [250, 160, 600],
+            "normal": [0,1,0],
+            "material":
+            {
+                "color": [0.38, 0.5, 0.22],
+                "ka": 0.4,
+                "kd": 0.8,
+                "ks": 0,
+                "n": 32
+            }
+        },
+        {
+            "type": "plane",
+            "comment": "Sky",
+            "position": [0, 0, -1310],
+            "normal": [0,0,1],
+            "material":
+            {
+                "is_flat": true,
+                "color": [0, 0.28, 0.4],
+                "ka": 0,
+                "kd": 0,
+                "ks": 0,
+                "n": 0
+            }
+        },
+        {
+            "type": "sphere",
+            "comment": "Sun",
+            "position": [0, 160, -1310],
+            "normal": [0,0,1],
+            "radius": 250,
+            "material":
+            {
+                "is_flat": true,
+                "color": [0.74, 0.62, 0.19],
+                "ka": 0,
+                "kd": 0,
+                "ks": 0,
+                "n": 0
+            }
+        },
+        {
+            "type": "mesh",
+            "comment": "City",
+            "position": [250, 160.01, 450],
+            "scale": 17,
+            "model": "city.obj",
+            "material":
+            {
+                "color": [0.7, 0.7, 0.7],
+                "ka": 0.5,
+                "kd": 1.0,
+                "ks": 0,
+                "n": 32
+            }
+        },
+        {
+            "type": "mesh",
+            "comment": "Monolith",
+            "position": [250, 160, 450],
+            "scale": 17,
+            "model": "monolith.obj",
+            "material":
+            {
+                "color": [0.1, 0.1, 0.1],
+                "ka": 0.5,
+                "kd": 0.9,
+                "ks": 0.3,
+                "n": 32
+            }
+        }
+    ]
+}
