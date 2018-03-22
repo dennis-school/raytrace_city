@@ -6,10 +6,21 @@
 #include "../object.h"
 #include "./triangle.h"
 
+/**
+ * Axis-aligned bounding box.
+ *
+ * It is not treated as a shape. It can only be used to determine whether
+ * a ray intersects with it or not (not where). This is used as a
+ * time optimisation technique, to eliminate non-intersecting rays early.
+ */
 class AABB {
 public:
   AABB( );
   AABB( Point const &lowBound, Point const &uppBound );
+  /**
+   * Returns true if the ray intersects with the AABB. Will also return
+   * true if the ray starts inside the AABB. Returns false otherwise
+   */
   bool intersects( Ray const &ray );
 private:
   Point lowBound;

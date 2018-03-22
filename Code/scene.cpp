@@ -59,9 +59,11 @@ Color Scene::trace(Ray const &ray, int recDepth)
     Color diffuseColor;
     Color specularColor;
     for ( LightPtr pLight : lights ) {
-        // Note that the ambient color is chosen as the average of all light sources
-        // (as proposed by the lecture slides)
-        ambientColor += ( pLight->color * material.ka ) / lights.size( );
+        if ( !hasAmbientLight ) { // If ambient light is not constant/statically defined
+            // Note that the ambient color is chosen as the average of all light sources
+            // (as proposed by the lecture slides)
+            ambientColor += ( pLight->color * material.ka ) / lights.size( );
+        }
         // Normalized vector pointing to the light
         Vector L = ( pLight->position - hitPoint ).normalized( );
         float lightDistance = ( pLight->position - hitPoint ).length( );
@@ -78,14 +80,8 @@ Color Scene::trace(Ray const &ray, int recDepth)
         }
     }
 
-    if ( hasAmbientLight ) {
+    if ( hasAmbientLight ) { // Use statically defined ambient light
         ambientColor = this->ambientLight * material.ka;
-    }
-
-    if ( recDepth > 0 && material.ks > 0 ) {
-        Vector REye = 2 * V.dot( N ) * N - V;
-        Ray specularRay( hitPoint + REye * SHADOW_BIAS, REye );
-        specularColor += material.ks * trace( specularRay, recDepth - 1 );
     }
 
     Color materialColor;
@@ -95,10 +91,17 @@ Color Scene::trace(Ray const &ray, int recDepth)
     } else {
         materialColor = material.color;
     }
+
     Color color;
-    if ( material.isFlat ) {
+    if ( material.isFlat ) { // Flat materials have no shading
         color = materialColor;
-    } else {
+    } else { // Non-flat materials do have shading
+        if ( recDepth > 0 && material.ks > 0 ) {
+            Vector REye = 2 * V.dot( N ) * N - V;
+            Ray specularRay( hitPoint + REye * SHADOW_BIAS, REye );
+            specularColor += material.ks * trace( specularRay, recDepth - 1 );
+        }
+
         // Note that the specular color is unrelated to the material color (as it is a reflection of the light source)
         color = ( ambientColor + diffuseColor ) * materialColor + specularColor;
     }

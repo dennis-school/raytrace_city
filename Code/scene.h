@@ -42,6 +42,7 @@ class Scene
 
     private:
         Point eye;
+        // Camera/eye rotation around x-axis
         float eyePitch;
         bool hasShadows;
         // True if a fixed ambient light is set
